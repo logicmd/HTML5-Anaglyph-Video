@@ -29,8 +29,6 @@
 		this.srcType = _stereoType;
 		this.stereoMode = _anaglyphMode;
 		this.video = document.getElementById("videoDiv");
-		this.fullscreenOffsetX = _offsetX;
-		this.fullscreenOffsetY = _offsetY;
 		// 即使这个video tag之后要被rename ID，但是在浏览器看了它还是有同一个唯一的ID
 		// 这个ID不会改变，所以，我们就拿之前的ID就O了
 		
