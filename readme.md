@@ -1,0 +1,43 @@
+#HTML5-Anaglyph-Video
+The repo consists of three parts.
+
+1. Demo [https://developer.mozilla.org/En/Manipulating_video_using_canvas]
+2. HTML5 anaglyph video implemented by native player
+3. HTML5 anaglyph video plugin of video-js
+
+
+> The Documents is mainly for the third part.
+
+
+## Setup
+1. add `video.patched.js` and `video.anaglyph.js` in your head of html.
+2. add
+```javascript
+		window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
+```
+in `<footer>`.
+
+## Usage
+
+`processor.doLoad(_stereoType, _anaglyphMode);`
+
+- `imgSrc`: url of source, **NOTICE**, the image must be loaded in the html.
+- `stereoType`: Stereo type of the source image
+  * `"Flat"`
+  * `"Anaglyph"`
+  * `"StereoLR"`
+  * `"StereoRL"`
+  * `"StereoUD"`
+  * `"StereoDU"`
+- `anaglyphMode`: Anaglyph Mode of the procedure
+  * `"TrueAnaglyph"` `TODO`
+  * `"GrayAnaglyph"` `TODO`
+  * `"ColorAnaglyph"` `TODO`
+  * `"OptimizedAnaglyph"` 
+- `glassType`: Anaglyph Mode of the procedure
+  * `"RedCyan"`
+  * `"GreenMagenta"` `TODO`
+
+## Roadmap
+1. rewrite the code to be javascript style.
+2. add various `stereoType`, `anaglyphMode` and `glassType`.

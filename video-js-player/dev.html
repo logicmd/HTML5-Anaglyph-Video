@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video.js | HTML5 Video Player</title>
+
+  <link href="video-js.css" rel="stylesheet" type="text/css">
+
+  <!-- video.js must be in the <head> for older IEs to work. -->
+  <script src="video.patched.js"></script>
+  <!-- <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet" type="text/css"><script src="http://vjs.zencdn.net/c/video.js"></script> -->
+
+	<script type="text/javascript" src="video.anaglyph.js"></script>
+	
+	<style type="text/css">
+		canvas#display {
+			z-index: 1;
+		}
+		
+		video#videoDiv_html5_api {
+			z-index: -2;
+		}
+		
+		div.vjs-controls {
+			z-index: 3;
+		}
+		
+	</style>
+
+</head>
+<body>
+
+  <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
+      data-setup="{}">
+    <source src="3DWaltz.mp4" type='video/mp4'> </source> 
+  </video>
+  <canvas id="display"></canvas>
+<footer>
+	<script type="text/javascript">
+		window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
+	</script>
+</footer>
+</body>
+</html>
