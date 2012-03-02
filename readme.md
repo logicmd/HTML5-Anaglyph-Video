@@ -14,7 +14,7 @@ The repo consists of three parts.
 2. add
 :::javascript
 		window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
-:::
+
 in `<footer>`.
 
 ## Usage
@@ -52,13 +52,11 @@ e.g.
       data-setup="{}">
     <source src="video/1.mp4" type='video/mp4'> </source> 
   </video>
-:::
 
 :::html
 <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
       data-setup="{}">
     <source src="../video/4.flv" type='video/flv'> </source> </source> 
   </video>
-:::
 
 > This will not happen when js scripts and video files in the same directory.
