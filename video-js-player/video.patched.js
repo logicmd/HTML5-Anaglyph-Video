@@ -75,7 +75,8 @@ VideoJS.options = {
   // techOrder: ["flash","html5"],
 
   html5: {},
-  flash: { swf: "http://vjs.zencdn.net/c/video-js.swf" },
+  // Mod by Chao
+  flash: { swf: "VideoJS.anaglyph.swf" },
 
   // Default of web browser is 300x150. Should rely on source width/height.
   width: "auto",
@@ -135,7 +136,8 @@ VideoJS.options = {
 
 // Set CDN Version of swf
 if (CDN_VERSION != "GENERATED_CDN_VSN") {
-  _V_.options.flash.swf = "http://vjs.zencdn.net/"+CDN_VERSION+"/video-js.swf"
+	// Mod by Chao
+  _V_.options.flash.swf = "VideoJS.anaglyph.swf"
 }
 
 // Automatically set up any tags that have a data-setup attribute

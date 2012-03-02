@@ -168,13 +168,12 @@
 
 		// scale 是状态量，scale一次即可。
 		this.ctx.scale(this.scaleRate, this.scaleRate);
-		// translate some pixels to cover original video perfectly.
+		// translate some pixels to cover original video perfectly.		
+		// Thanks to Chao's help.
 		this.ctx.translate(
 			 (this.cvs.width + 1 - this.imageData.width * this.scaleRate) / 2 / this.scaleRate,
 			 (window.screen.height + 1 - this.imageData.height * this.scaleRate) / 2 / this.scaleRate
 			);
-		// TODO dity constants.
-		//this.ctx.translate(this.fullscreenOffsetX, this.fullscreenOffsetY);
 		this.isFullScreen = true;
 		
 		return;
