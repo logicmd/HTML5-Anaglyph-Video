@@ -164,7 +164,7 @@
 		var hRate = (window.screen.height + 1) / this.imageData.height;
 		var wRate = (this.cvs.width + 1) / this.imageData.width;
 
-		this.scaleRate = ( hRate < wRate ) ?　 hRate : wRate;
+		this.scaleRate = ( hRate < wRate ) ? hRate : wRate;
 
 		// scale 是状态量，scale一次即可。
 		this.ctx.scale(this.scaleRate, this.scaleRate);
