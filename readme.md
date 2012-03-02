@@ -40,4 +40,23 @@ in `<footer>`.
 
 ## Roadmap
 1. rewrite the code to be javascript style.
-2. add various `stereoType`, `anaglyphMode` and `glassType`.
+2. add various `anaglyphMode` and `glassType`.
+3. fix bugs that source video is not compressed at one direction.
+4. fix bugs in different video url in HTML and flash.
+e.g.
+
+```HTML
+<video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
+      data-setup="{}">
+    <source src="video/1.mp4" type='video/mp4'> </source> 
+  </video>
+```
+
+```HTML
+<video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
+      data-setup="{}">
+    <source src="../video/4.flv" type='video/flv'> </source> </source> 
+  </video>
+```
+
+> This will not happen when js scripts and video files in the same directory.
