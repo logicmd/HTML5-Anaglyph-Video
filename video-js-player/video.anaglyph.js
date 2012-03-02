@@ -25,10 +25,12 @@
 	 *
 	 * 拿到两个canvas的的context，ctx1和ctx2
 	 */
-	doLoad : function(_stereoType, _anaglyphMode) {
-		this.srcType = _stereoType;
-		this.stereoMode = _anaglyphMode;
+	doLoad : function(_srcType, _stereoMode, _offsetX, _offsetY) {
+		this.srcType = _srcType;
+		this.stereoMode = _stereoMode;
 		this.video = document.getElementById("videoDiv");
+		this.fullscreenOffsetX = _offsetX;
+		this.fullscreenOffsetY = _offsetY;
 		// 即使这个video tag之后要被rename ID，但是在浏览器看了它还是有同一个唯一的ID
 		// 这个ID不会改变，所以，我们就拿之前的ID就O了
 		
@@ -66,6 +68,8 @@
 				break;
 			case "StereoLR":
 			case "StereoRL":
+				this.buf.width = this.width * 2;
+				this.buf.height = this.height;
 				this.imageData = this.ctx.createImageData(this.width, this.height);
 				break;
 		}
@@ -118,21 +122,24 @@
 		
 		switch (this.srcType) {
 			case "StereoUD":
-				this.iData1 = this.bufCtx.getImageData(0, 0, this.width, this.height / 2);
-				this.iData2 = this.bufCtx.getImageData(0, this.height / 2, this.width, this.height / 2);
+				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);			
+				this.iData1 = this.bufCtx.getImageData(0, 0, this.width, this.height);
+				this.iData2 = this.bufCtx.getImageData(0, this.height, this.width, this.height);
 				break;
 			case "StereoDU":
-				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.width, this.height * 2);
+				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
 				this.iData2 = this.bufCtx.getImageData(0, 0, this.width, this.height);
 				this.iData1 = this.bufCtx.getImageData(0, this.height, this.width, this.height);
 				break;
 			case "StereoLR":
-				this.iData1 = this.bufCtx.getImageData(0, 0, this.width / 2, this.height);
-				this.iData2 = this.bufCtx.getImageData(this.width / 2, 0, this.width / 2, this.height);
+				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
+				this.iData1 = this.bufCtx.getImageData(0, 0, this.width, this.height);
+				this.iData2 = this.bufCtx.getImageData(this.width, 0, this.width, this.height);
 				break;
 			case "StereoRL":
-				this.iData2 = this.bufCtx.getImageData(0, 0, this.width / 2, this.height);
-				this.iData1 = this.bufCtx.getImageData(this.width / 2, 0, this.width / 2, this.height);
+				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
+				this.iData2 = this.bufCtx.getImageData(0, 0, this.width, this.height);
+				this.iData1 = this.bufCtx.getImageData(this.width, 0, this.width, this.height);
 				break;
 		}
 		return;
