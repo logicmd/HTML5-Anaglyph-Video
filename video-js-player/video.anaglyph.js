@@ -25,12 +25,10 @@
 	 *
 	 * 拿到两个canvas的的context，ctx1和ctx2
 	 */
-	doLoad : function(_srcType, _stereoMode, _offsetX, _offsetY) {
+	doLoad : function(_srcType, _stereoMode) {
 		this.srcType = _srcType;
 		this.stereoMode = _stereoMode;
 		this.video = document.getElementById("videoDiv");
-		this.fullscreenOffsetX = _offsetX;
-		this.fullscreenOffsetY = _offsetY;
 		// 即使这个video tag之后要被rename ID，但是在浏览器看了它还是有同一个唯一的ID
 		// 这个ID不会改变，所以，我们就拿之前的ID就O了
 		
@@ -41,6 +39,10 @@
 
 		this.buf = document.createElement("canvas");
 		this.bufCtx = this.buf.getContext("2d");
+		
+		// TO FIX Fullscreen Progressive bar bug
+		this.normWidth = this.video.width;
+		this.normHeight = this.video.height;
 
 		var self = this;
 		this.video.addEventListener("play", function() {
@@ -78,7 +80,7 @@
 		this.cvs.height = this.height;
 		// 重叠以便覆盖
 		this.cvs.style.position = "relative";
-		this.cvs.style.top = ( 0 - this.height ) + "px";
+		this.cvs.style.top = ( 0 - this.normHeight ) + "px";
 	},
 	
 	computeFrame : function() {
@@ -91,7 +93,7 @@
 		var idg = this.iData1;
 		var idb = this.iData1;
 
-		var y = this.imageData.width * this.imageData.height;
+		var y = this.normWidth * this.normHeight;
 
 		for( x = 0; x++ < y; ) {
 			r = idr.data[index + 1] * 0.7 + idr.data[index + 2] * 0.3;
@@ -155,7 +157,7 @@
 		this.cvs.width  = window.screen.width; //= this.ctx.width
 		this.cvs.height = window.screen.height - ctrlHeight;//= this.ctx.height
 		this.cvs.style.zIndex = "2147483647";
-		this.cvs.style.top = ( 0 - this.height - 9 ) + "px";
+		this.cvs.style.top = ( 0 - this.normHeight - 9 ) + "px";
 		this.cvs.style.left = ( 0 - 9 ) + "px";
 		
 		// Due to the bug of video-js issue #153
