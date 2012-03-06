@@ -46,11 +46,19 @@
 
 		var self = this;
 		this.video.addEventListener("play", function() {
-			self.width = self.video.clientWidth;
-			self.height = self.video.clientHeight;
+			(self.video.clientWidth == 0) ? self.width = self.normWidth : self.width = self.video.clientWidth ;
+			(self.video.clientHeight == 0) ? self.height = self.normHeight : self.height = self.video.clientHeight ;
+
 			self.prepareSizeLoc();
 			self.timerCallback();
 		}, false);
+		
+		// this.video.addEventListener("seeking", function() {
+			// self.width = self.video.width;
+			// self.height = self.video.height;
+			// self.prepareSizeLoc();
+			// self.timerCallback();
+		// }, false);
 	},
 	/*
 	 * 根据源的类型，确定中间canvas拉伸后的大小。
@@ -78,9 +86,21 @@
 		
 		this.cvs.width = this.width;
 		this.cvs.height = this.height;
-		// 重叠以便覆盖
+		
 		this.cvs.style.position = "relative";
-		this.cvs.style.top = ( 0 - this.normHeight ) + "px";
+		// 重叠以便覆盖
+		if (!this.isFullScreen) {
+			this.cvs.style.top = ( 0 - this.normHeight ) + "px";
+		} else {
+			var ctrlHeight = 45;
+			this.cvs.width  = window.screen.width; //= this.ctx.width
+			this.cvs.height = window.screen.height - ctrlHeight;//= this.ctx.height
+			this.cvs.style.zIndex = "2147483647";
+			this.cvs.style.top = ( 0 - this.normHeight - 9 ) + "px";
+			this.cvs.style.left = ( 0 - 9 ) + "px";
+		}
+		
+		
 	},
 	
 	computeFrame : function() {
