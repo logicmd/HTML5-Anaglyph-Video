@@ -13,7 +13,7 @@ The repo consists of three parts.
 1. add `video.patched.js` and `video.anaglyph.js` in your head of html.
 2. add
 ```javascript
-		window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
+                window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
 ```
 in `<footer>`.
 

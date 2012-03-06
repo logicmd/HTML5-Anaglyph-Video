@@ -46,19 +46,15 @@
 
 		var self = this;
 		this.video.addEventListener("play", function() {
-			(self.video.clientWidth == 0) ? self.width = self.normWidth : self.width = self.video.clientWidth ;
-			(self.video.clientHeight == 0) ? self.height = self.normHeight : self.height = self.video.clientHeight ;
-
+			// Fix INDEX ERR when seeking
+			(self.normWidth == 0) ? self.width = self.video.clientWidth : self.width = self.normWidth ;
+			(self.normHeight == 0) ? self.height = self.video.clientHeight : self.height = self.normHeight ;
+			// 第一遍载入时没有normWidth和normHeight，我们读clientWidth和clientHeight（屏幕实际显示大小）
+			// 之后过这一块的时候我们永远用normWidth和normHeight，即视频的原始大小。
 			self.prepareSizeLoc();
 			self.timerCallback();
 		}, false);
 		
-		// this.video.addEventListener("seeking", function() {
-			// self.width = self.video.width;
-			// self.height = self.video.height;
-			// self.prepareSizeLoc();
-			// self.timerCallback();
-		// }, false);
 	},
 	/*
 	 * 根据源的类型，确定中间canvas拉伸后的大小。
@@ -90,14 +86,9 @@
 		this.cvs.style.position = "relative";
 		// 重叠以便覆盖
 		if (!this.isFullScreen) {
-			this.cvs.style.top = ( 0 - this.normHeight ) + "px";
+			this.cvs.style.top = ( 0 - this.height ) + "px";
 		} else {
-			var ctrlHeight = 45;
-			this.cvs.width  = window.screen.width; //= this.ctx.width
-			this.cvs.height = window.screen.height - ctrlHeight;//= this.ctx.height
-			this.cvs.style.zIndex = "2147483647";
-			this.cvs.style.top = ( 0 - this.normHeight - 9 ) + "px";
-			this.cvs.style.left = ( 0 - 9 ) + "px";
+			this.enterFullScreen();
 		}
 		
 		
@@ -113,7 +104,7 @@
 		var idg = this.iData1;
 		var idb = this.iData1;
 
-		var y = this.normWidth * this.normHeight;
+		var y = this.imageData.width * this.imageData.height;
 
 		for( x = 0; x++ < y; ) {
 			r = idr.data[index + 1] * 0.7 + idr.data[index + 2] * 0.3;
@@ -177,7 +168,7 @@
 		this.cvs.width  = window.screen.width; //= this.ctx.width
 		this.cvs.height = window.screen.height - ctrlHeight;//= this.ctx.height
 		this.cvs.style.zIndex = "2147483647";
-		this.cvs.style.top = ( 0 - this.normHeight - 9 ) + "px";
+		this.cvs.style.top = ( 0 - this.height - 9 ) + "px";
 		this.cvs.style.left = ( 0 - 9 ) + "px";
 		
 		// Due to the bug of video-js issue #153
