@@ -55,14 +55,16 @@
 	 */
 	prepareSizeLoc : function() {
 		switch (this.srcType) {
-			case "stereoUD":
-			case "stereoDU":
-				this.buf.width = this.c1.width = this.width;
-				this.buf.height = this.c1.height = this.height * 2;
+			case "StereoUD":
+			case "StereoDU":
+				this.buf.width = this.width;
+				this.buf.height = this.height * 2;
 				this.imageData = this.ctx.createImageData(this.width, this.height);
 				break;
-			case "stereoLR":
-			case "stereoRL":
+			case "StereoLR":
+			case "StereoRL":
+				this.buf.width = this.width * 2;
+				this.buf.height = this.height;
 				this.imageData = this.ctx.createImageData(this.width, this.height);
 				break;
 		}
@@ -112,22 +114,25 @@
 	splitFrame : function() {
 		
 		switch (this.srcType) {
-			case "stereoUD":
-				this.iData1 = this.bufCtx.getImageData(0, 0, this.width, this.height / 2);
-				this.iData2 = this.bufCtx.getImageData(0, this.height / 2, this.width, this.height / 2);
+			case "StereoUD":
+				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);			
+				this.iData1 = this.bufCtx.getImageData(0, 0, this.width, this.height);
+				this.iData2 = this.bufCtx.getImageData(0, this.height, this.width, this.height);
 				break;
-			case "stereoDU":
-				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.width, this.height * 2);
+			case "StereoDU":
+				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
 				this.iData2 = this.bufCtx.getImageData(0, 0, this.width, this.height);
 				this.iData1 = this.bufCtx.getImageData(0, this.height, this.width, this.height);
 				break;
-			case "stereoLR":
-				this.iData1 = this.bufCtx.getImageData(0, 0, this.width / 2, this.height);
-				this.iData2 = this.bufCtx.getImageData(this.width / 2, 0, this.width / 2, this.height);
+			case "StereoLR":
+				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
+				this.iData1 = this.bufCtx.getImageData(0, 0, this.width, this.height);
+				this.iData2 = this.bufCtx.getImageData(this.width, 0, this.width, this.height);
 				break;
-			case "stereoRL":
-				this.iData2 = this.bufCtx.getImageData(0, 0, this.width / 2, this.height);
-				this.iData1 = this.bufCtx.getImageData(this.width / 2, 0, this.width / 2, this.height);
+			case "StereoRL":
+				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
+				this.iData2 = this.bufCtx.getImageData(0, 0, this.width, this.height);
+				this.iData1 = this.bufCtx.getImageData(this.width, 0, this.width, this.height);
 				break;
 		}
 		return;
