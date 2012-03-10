@@ -13,6 +13,8 @@ The repo consists of three parts.
 1. add `video.patched.js` and `video.anaglyph.js` in your head of html.
 2. add the following in `<footer>`.
 
+
+
     :::javascript
     Hashify.editor(editor, false, function () {
       setLocation(Hashify.encode(this.value));
