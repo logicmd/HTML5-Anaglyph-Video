@@ -12,8 +12,14 @@ The repo consists of three parts.
 ## Setup
 1. add `video.patched.js` and `video.anaglyph.js` in your head of html.
 2. add the following in `<footer>`.
+
     :::javascript
-      window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
+    Hashify.editor(editor, false, function () {
+      setLocation(Hashify.encode(this.value));
+    });
+
+    :::javascript
+    window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
 
 
 ## Usage
@@ -46,14 +52,12 @@ The repo consists of three parts.
 4. fix bugs in different video url in HTML and flash.
 e.g.
 
-    :::html
     <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
       data-setup="{}">
       <source src="video/1.mp4" type='video/mp4'> </source> 
     </video>
 
 
-    :::html
     <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
       data-setup="{}">
       <source src="../video/4.flv" type='video/flv'> </source> </source> 
