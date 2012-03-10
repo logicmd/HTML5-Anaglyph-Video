@@ -11,15 +11,14 @@ The repo consists of three parts.
 
 ## Setup
 1. add `video.patched.js` and `video.anaglyph.js` in your head of html.
-2. add
-```javascript
-                window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
-```
-in `<footer>`.
+2. add the following in `<footer>`.
+    :::javascript
+      window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
+
 
 ## Usage
 
-`processor.doLoad(_stereoType, _anaglyphMode);`
+    processor.doLoad(_stereoType, _anaglyphMode);
 
 #### `imgSrc`: url of source, **NOTICE**, the image must be loaded in the html.
 #### `stereoType`: Stereo type of the source image
@@ -47,18 +46,17 @@ in `<footer>`.
 4. fix bugs in different video url in HTML and flash.
 e.g.
 
-```
-<video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
+    :::html
+    <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
       data-setup="{}">
-    <source src="video/1.mp4" type='video/mp4'> </source> 
-  </video>
-```
+      <source src="video/1.mp4" type='video/mp4'> </source> 
+    </video>
 
-```
-<video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
+
+    :::html
+    <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
       data-setup="{}">
-    <source src="../video/4.flv" type='video/flv'> </source> </source> 
-  </video>
-```
+      <source src="../video/4.flv" type='video/flv'> </source> </source> 
+    </video>
 
 > This will not happen when js scripts and video files in the same directory.
