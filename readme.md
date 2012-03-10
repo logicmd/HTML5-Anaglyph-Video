@@ -10,18 +10,12 @@ The repo consists of three parts.
 
 
 ## Setup
-1. add `video.patched.js` and `video.anaglyph.js` in your head of html.
-2. add the following in `<footer>`.
-
-
-
-    :::javascript
-    Hashify.editor(editor, false, function () {
-      setLocation(Hashify.encode(this.value));
-    });
 
     :::javascript
     window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
+
+1. add `video.patched.js` and `video.anaglyph.js` in your head of html.
+2. add the following in `<footer>`.
 
 
 ## Usage
@@ -52,7 +46,8 @@ The repo consists of three parts.
 2. add various `anaglyphMode` and `glassType`.
 3. fix bugs that source video is not compressed at one direction.
 4. fix bugs in different video url in HTML and flash.
-e.g.
+
+#### e.g.
 
     <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
       data-setup="{}">
