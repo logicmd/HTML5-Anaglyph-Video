@@ -30,8 +30,8 @@
 		this.stereoMode = _stereoMode;
 		this.video = document.getElementById("videoDiv");
 		
-    // @initialX 最初<video>放在html的位置X, 很奇怪，这里取8的效果是好的，原因未知。
-    // @initialY 最初<video>放在html的位置Y
+		// @initialX 最初<video>放在html的位置X, 很奇怪，这里取8的效果是好的，原因未知。
+		// @initialY 最初<video>放在html的位置Y
 		this.initialX = 8;
 		this.initialY = this.video.offsetTop;
 		
@@ -47,14 +47,24 @@
 		this.bufCtx = this.buf.getContext("2d");
 		
 		// Fixed Fullscreen Progressive bar bug
-		this.normWidth = this.video.width;
-		this.normHeight = this.video.height;
+		//this.normWidth = this.video.width;
+		//this.normHeight = this.video.height;
+		
+		// TO Fix abitary resolution issues
+		//this.vWidth = this.video.videoWidth;
+		//this.vHeight = this.video.videoHeight;
 
 		var self = this;
 		this.video.addEventListener("play", function() {
 			// Fix INDEX ERR when seeking
-			(self.normWidth == 0) ? self.width = self.video.clientWidth : self.width = self.normWidth ;
-			(self.normHeight == 0) ? self.height = self.video.clientHeight : self.height = self.normHeight ;
+			self.width = (self.video.width == 0) ? self.video.clientWidth : self.video.width ;
+			self.height = (self.video.height == 0) ? self.video.clientHeight : self.video.height ;
+			
+			// TO Fix abitary resolution issues
+			self.vwidth = (self.video.videoWidth == 0) ? self.video.clientWidth : self.video.videoWidth ;
+			self.vheight = (self.video.videoHeight == 0) ? self.video.clientHeight : self.video.videoWidth ;
+			
+			
 			// 第一遍载入时没有normWidth和normHeight，我们读clientWidth和clientHeight（屏幕实际显示大小）
 			// 之后过这一块的时候我们永远用normWidth和normHeight，即视频的原始大小。
 			self.prepareSizeLoc();
@@ -69,30 +79,28 @@
 	 */
 	prepareSizeLoc : function() {
 		// for videoJS only
-		//this.video.width = this.width;
-		//this.video.height = this.height;
 		switch (this.srcType) {
 			case "StereoUD":
 			case "StereoDU":
-				this.buf.width = this.width;
-				this.buf.height = this.height * 2;
-				this.imageData = this.ctx.createImageData(this.width, this.height);
+				this.buf.width = this.vwidth;
+				this.buf.height = this.vheight * 2;
+				this.imageData = this.ctx.createImageData(this.vwidth, this.vheight);
 				break;
 			case "StereoLR":
 			case "StereoRL":
-				this.buf.width = this.width * 2;
-				this.buf.height = this.height;
-				this.imageData = this.ctx.createImageData(this.width, this.height);
+				this.buf.width = this.vwidth * 2;
+				this.buf.height = this.vheight;
+				this.imageData = this.ctx.createImageData(this.vwidth, this.vheight);
 				break;
 		}
 		
-		this.cvs.width = this.width;
-		this.cvs.height = this.height;
+		//this.cvs.width = this.vheight;
+		//this.cvs.height = this.vheight;
 		
 		this.cvs.style.position = "relative";
 		// 重叠以便覆盖
 		if (!this.isFullScreen) {
-			this.cvs.style.top = ( 0 - this.height ) + "px";
+			this.enterNormMode();
 		} else {
 			this.enterFullScreen();
 		}
@@ -124,13 +132,13 @@
 		}
 		
 		
-		if(!this.isFullScreen) {
-			this.ctx.putImageData(this.imageData, 0, 0);
-		} else {
+		//if(!this.isFullScreen) {
+		//	this.ctx.putImageData(this.imageData, 0, 0);
+		//} else {
 			this.tmpCvs.getContext("2d").putImageData(this.imageData, 0, 0);
 			
 			this.ctx.drawImage(this.tmpCvs, 0, 0);
-		}
+		//}
 		return;
 	},
 	/*
@@ -141,14 +149,14 @@
 		
 		switch (this.srcType) {
 			case "StereoUD":
-				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);			
-				this.iData1 = this.bufCtx.getImageData(0, 0, this.width, this.height);
-				this.iData2 = this.bufCtx.getImageData(0, this.height, this.width, this.height);
+				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);			
+				this.iData1 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
+				this.iData2 = this.bufCtx.getImageData(0, this.vheight, this.vwidth, this.vheight);
 				break;
 			case "StereoDU":
-				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
-				this.iData2 = this.bufCtx.getImageData(0, 0, this.width, this.height);
-				this.iData1 = this.bufCtx.getImageData(0, this.height, this.width, this.height);
+				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);
+				this.iData2 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
+				this.iData1 = this.bufCtx.getImageData(0, this.vheight, this.vwidth, this.vheight);
 				break;
 			case "StereoLR":
 				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
@@ -156,11 +164,39 @@
 				this.iData2 = this.bufCtx.getImageData(this.width, 0, this.width, this.height);
 				break;
 			case "StereoRL":
-				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
-				this.iData2 = this.bufCtx.getImageData(0, 0, this.width, this.height);
-				this.iData1 = this.bufCtx.getImageData(this.width, 0, this.width, this.height);
+				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);
+				this.iData2 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
+				this.iData1 = this.bufCtx.getImageData(this.vwidth, 0, this.vwidth, this.vheight);
 				break;
 		}
+		return;
+	},
+	
+	enterNormMode : function() {
+		// 存scale前数据
+		this.tmpCvs = document.createElement('canvas');
+		this.tmpCvs.width = this.imageData.width;
+		this.tmpCvs.height = this.imageData.height;
+		
+		this.cvs.width  = this.width;
+		this.cvs.height = this.height;
+		this.cvs.style.top = ( 0 - this.height ) + "px";
+		
+		var hRate = (this.cvs.height + 1) / this.imageData.height;
+		var wRate = (this.cvs.width + 1) / this.imageData.width;
+
+		this.scaleRate = ( hRate < wRate ) ? hRate : wRate;
+
+		// scale 是状态量，scale一次即可。
+		this.ctx.scale(this.scaleRate, this.scaleRate);
+		// translate some pixels to cover original video perfectly.		
+		// Thanks to Chao's help.
+		this.ctx.translate(
+			 (this.cvs.width + 1 - this.imageData.width * this.scaleRate) / 2 / this.scaleRate,
+			 (this.cvs.height + 1 - this.imageData.height * this.scaleRate) / 2 / this.scaleRate
+			);
+		this.isFullScreen = true;
+		
 		return;
 	},
 	
