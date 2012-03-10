@@ -11,11 +11,13 @@ The repo consists of three parts.
 
 ## Setup
 
-    :::javascript
-    window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
-
 1. add `video.patched.js` and `video.anaglyph.js` in your head of html.
 2. add the following in `<footer>`.
+
+namely
+
+    :::javascript
+    window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
 
 
 ## Usage
@@ -48,12 +50,14 @@ The repo consists of three parts.
 4. fix bugs in different video url in HTML and flash.
 
 #### e.g.
+using html5
 
     <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
       data-setup="{}">
       <source src="video/1.mp4" type='video/mp4'> </source> 
     </video>
 
+while using flash
 
     <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
       data-setup="{}">
