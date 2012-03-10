@@ -22,13 +22,19 @@
 	 * 	stereo后第一个字符代表左眼视点，第二个字符代表右眼视点
 	 * @stereoMode -> 混合模式
 	 * 	"OptimizedAnaglyph"
-	 *
+	 * @initialX 最初<video>放在html的位置X
+	 * @initialY 最初<video>放在html的位置Y
+	 * 
 	 * 拿到两个canvas的的context，ctx1和ctx2
 	 */
-	doLoad : function(_srcType, _stereoMode) {
+	doLoad : function(_srcType, _stereoMode, _initialX, _initialY) {
 		this.srcType = _srcType;
 		this.stereoMode = _stereoMode;
 		this.video = document.getElementById("videoDiv");
+		
+		this.initialX = _initialX;
+		this.initialY = _initialY;
+		
 		// 即使这个video tag之后要被rename ID，但是在浏览器看了它还是有同一个唯一的ID
 		// 这个ID不会改变，所以，我们就拿之前的ID就O了
 		
@@ -168,8 +174,8 @@
 		this.cvs.width  = window.screen.width; //= this.ctx.width
 		this.cvs.height = window.screen.height - ctrlHeight;//= this.ctx.height
 		this.cvs.style.zIndex = "2147483647";
-		this.cvs.style.top = ( 0 - this.height - 9 ) + "px";
-		this.cvs.style.left = ( 0 - 9 ) + "px";
+		this.cvs.style.top = ( 0 - this.height - this.initialX ) + "px";
+		this.cvs.style.left = ( 0 - this.initialY ) + "px";
 		
 		// Due to the bug of video-js issue #153
 		// https://github.com/zencoder/video-js/issues/153
