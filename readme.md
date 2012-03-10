@@ -36,9 +36,6 @@ in `<footer>`.
   * `"ColorAnaglyph"` `TODO`
   * `"OptimizedAnaglyph"` 
 
-#### `initialX` `initialY`: margin of video in html. 
-when fullscreen the canvas will move that mush distance.
-
 #### `glassType`: Anaglyph Mode of the procedure
   * `"RedCyan"`
   * `"GreenMagenta"` `TODO`
