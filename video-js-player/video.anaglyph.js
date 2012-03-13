@@ -48,12 +48,6 @@ var processor = {
 		this.srcType = _srcType;
 		this.stereoMode = _stereoMode;
 		this.video = document.getElementById("videoDiv");
-		
-    // @initialX 最初<video>放在html的位置X, 很奇怪，这里取8的效果是好的，原因未知。
-    // @initialY 最初<video>放在html的位置Y
-		this.initialX = 8;
-		this.initialY = this.video.offsetTop;
-		
 		// 即使这个video tag之后要被rename ID，但是在浏览器看了它还是有同一个唯一的ID
 		// 这个ID不会改变，所以，我们就拿之前的ID就O了
 		
@@ -183,7 +177,7 @@ var processor = {
 		return;
 	},
 	
-	enterFullScreen : function() {
+	enterFullScreen : function(_offsetX, _offsetY) {
 		// 存scale前数据
 		this.tmpCvs = document.createElement('canvas');
 		this.tmpCvs.width = this.imageData.width;
@@ -193,8 +187,13 @@ var processor = {
 		this.cvs.width  = window.screen.width;
 		this.cvs.height = window.screen.height - ctrlHeight;
 		this.cvs.style.zIndex = "2147483647";
-		this.cvs.style.top = ( 0 - this.height - this.initialY ) + "px";
-		this.cvs.style.left = ( 0 - this.initialX ) + "px";
+		
+		// 只有第一次call的时候才能拿到正确的offset，之后再seek的时候拿不到，因此我们需要保存这个值
+		(_offsetX != 0) ? ( this.offsetX = _offsetX ) : ( _offsetX = this.offsetX );
+		(_offsetY != 0) ? ( this.offsetY = _offsetY ) : ( _offsetX = this.offsetY );
+		
+		this.cvs.style.top = ( 0 - this.height - _offsetY ) + "px";
+		this.cvs.style.left = ( 0 - _offsetX ) + "px";
 		
 		// Due to the bug of video-js issue #153
 		// https://github.com/zencoder/video-js/issues/153
