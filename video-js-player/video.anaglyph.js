@@ -56,13 +56,13 @@
 
 		var self = this;
 		this.video.addEventListener("play", function() {
-			// Fix INDEX ERR when seeking
+			// Fix INDEX ERR when seeking & Fullscreen Progressive bar bug
 			self.width = (self.video.width == 0) ? self.video.clientWidth : self.video.width ;
 			self.height = (self.video.height == 0) ? self.video.clientHeight : self.video.height ;
 			
 			// TO Fix abitary resolution issues
 			self.vwidth = (self.video.videoWidth == 0) ? self.video.clientWidth : self.video.videoWidth ;
-			self.vheight = (self.video.videoHeight == 0) ? self.video.clientHeight : self.video.videoWidth ;
+			self.vheight = (self.video.videoHeight == 0) ? self.video.clientHeight : self.video.videoHeight ;
 			
 			
 			// 第一遍载入时没有normWidth和normHeight，我们读clientWidth和clientHeight（屏幕实际显示大小）
@@ -94,8 +94,6 @@
 				break;
 		}
 		
-		//this.cvs.width = this.vheight;
-		//this.cvs.height = this.vheight;
 		
 		this.cvs.style.position = "relative";
 		// 重叠以便覆盖
@@ -181,6 +179,8 @@
 		this.cvs.width  = this.width;
 		this.cvs.height = this.height;
 		this.cvs.style.top = ( 0 - this.height ) + "px";
+		this.cvs.style.left = 0 + "px";
+		this.cvs.style.zIndex = "1";
 		
 		var hRate = (this.cvs.height + 1) / this.imageData.height;
 		var wRate = (this.cvs.width + 1) / this.imageData.width;
@@ -189,13 +189,12 @@
 
 		// scale 是状态量，scale一次即可。
 		this.ctx.scale(this.scaleRate, this.scaleRate);
-		// translate some pixels to cover original video perfectly.		
-		// Thanks to Chao's help.
+
 		this.ctx.translate(
 			 (this.cvs.width + 1 - this.imageData.width * this.scaleRate) / 2 / this.scaleRate,
 			 (this.cvs.height + 1 - this.imageData.height * this.scaleRate) / 2 / this.scaleRate
 			);
-		this.isFullScreen = true;
+		this.isFullScreen = false;
 		
 		return;
 	},
@@ -235,12 +234,7 @@
 	},
 	
 	exitFullScreen : function() {
-		this.cvs.width = this.width;
-		this.cvs.height = this.height;
-		this.cvs.style.zIndex = "1";
-		this.cvs.style.top = ( 0 - this.height ) + "px";
-		this.cvs.style.left = 0 + "px";
- 
+		this.enterNormMode();
 		this.isFullScreen = false;
 		return;
 	},
