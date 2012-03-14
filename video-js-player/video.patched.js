@@ -2648,7 +2648,7 @@ _V_.Player = _V_.Component.extend({
      // @initialX 最初<video>放在html的位置X, 很奇怪，这里取8的效果是好的，原因未知。
      // @initialY 最初<video>放在html的位置Y
      var vdiv = document.getElementById("videoDiv");
-     var initialX = vdiv.offsetLeft;
+     var initialX = 8;
      var initialY = vdiv.offsetTop - document.body.scrollTop;
      processor.enterFullScreen(initialX, initialY);
 
