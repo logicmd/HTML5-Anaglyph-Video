@@ -25,7 +25,15 @@
 	 * 
 	 * 拿到两个canvas的的context，ctx1和ctx2
 	 */
-	doLoad : function(_srcType, _stereoMode) {
+	doLoad : function(_srcType, _stereoMode, _videoWidth, _videoHeight) {
+		/*
+		// 死循环 Uncaught RangeError: Maximum call stack size exceeded
+		if (document.getElementById("videoDiv").video && document.getElementById("videoDiv").width) {
+			; //do nothing
+		} else {
+			setTimeout(this.doLoad(), 1000);
+			return;
+		}*/
 		this.srcType = _srcType;
 		this.stereoMode = _stereoMode;
 		this.video = document.getElementById("videoDiv");
@@ -45,14 +53,6 @@
 
 		this.buf = document.createElement("canvas");
 		this.bufCtx = this.buf.getContext("2d");
-		
-		// Fixed Fullscreen Progressive bar bug
-		//this.normWidth = this.video.width;
-		//this.normHeight = this.video.height;
-		
-		// TO Fix abitary resolution issues
-		//this.vWidth = this.video.videoWidth;
-		//this.vHeight = this.video.videoHeight;
 
 		var self = this;
 		this.video.addEventListener("play", function() {
@@ -61,8 +61,10 @@
 			self.height = (self.video.height == 0) ? self.video.clientHeight : self.video.height ;
 			
 			// TO Fix abitary resolution issues
-			self.vwidth = (self.video.videoWidth == 0) ? self.video.clientWidth : self.video.videoWidth ;
-			self.vheight = (self.video.videoHeight == 0) ? self.video.clientHeight : self.video.videoHeight ;
+			//self.vwidth = (self.video.videoWidth == 0) ? self.video.clientWidth : self.video.videoWidth ;
+			//self.vheight = (self.video.videoHeight == 0) ? self.video.clientHeight : self.video.videoHeight ;
+			self.vwidth = (self.video.videoWidth == 0) ? _videoWidth : self.video.videoWidth ;
+			self.vheight = (self.video.videoHeight == 0) ? _videoHeight : self.video.videoHeight ;
 			
 			
 			// 第一遍载入时没有normWidth和normHeight，我们读clientWidth和clientHeight（屏幕实际显示大小）
