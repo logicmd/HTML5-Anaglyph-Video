@@ -62,7 +62,7 @@ while using flash
 
     <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="480" height="360"
       data-setup="{}">
-      <source src="../video/4.flv" type='video/flv'> </source> </source> 
+      <source src="../video/4.flv" type='video/flv'> </source>
     </video>
 
 > This will not happen when js scripts and video files in the same directory.
