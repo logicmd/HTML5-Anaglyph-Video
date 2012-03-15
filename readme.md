@@ -22,7 +22,7 @@ namely
 
 ## Usage
 
-    processor.doLoad(_stereoType, _anaglyphMode, _videoWidth, _videoHeight);
+    processor.doLoad(_stereoType, _anaglyphMode, _glassType, _videoWidth, _videoHeight);
 
 #### `imgSrc`: url of source, **NOTICE**, the image must be loaded in the html.
 #### `stereoType`: Stereo type of the source image
@@ -34,16 +34,16 @@ namely
   * `"StereoDU"`
 
 #### `anaglyphMode`: Anaglyph Mode of the procedure
-  * `"TrueAnaglyph"` `TODO`
-  * `"GrayAnaglyph"` `TODO`
-  * `"ColorAnaglyph"` `TODO`
+  * `"TrueAnaglyph"` 
+  * `"GrayAnaglyph"` 
+  * `"ColorAnaglyph"` 
   * `"OptimizedAnaglyph"` 
 
 #### `glassType`: Anaglyph Mode of the procedure
   * `"RedCyan"`
-  * `"GreenMagenta"` `TODO`
+  * `"GreenMagenta"` 
 
-#### `_videoWidth` `_videoHeight`: width and height of original video.
+#### `videoWidth` `videoHeight`: width and height of original video.
 
 ## Roadmap
 1. rewrite the code to be javascript style.
