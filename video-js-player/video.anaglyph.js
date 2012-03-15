@@ -44,7 +44,15 @@ var processor = {
 	 * 
 	 * 拿到两个canvas的的context，ctx1和ctx2
 	 */
-	doLoad : function(_srcType, _stereoMode) {
+	doLoad : function(_srcType, _stereoMode, _videoWidth, _videoHeight) {
+		/*
+		// 死循环 Uncaught RangeError: Maximum call stack size exceeded
+		if (document.getElementById("videoDiv").video && document.getElementById("videoDiv").width) {
+			; //do nothing
+		} else {
+			setTimeout(this.doLoad(), 1000);
+			return;
+		}*/
 		this.srcType = _srcType;
 		this.stereoMode = _stereoMode;
 		this.video = document.getElementById("videoDiv");
@@ -58,16 +66,19 @@ var processor = {
 
 		this.buf = document.createElement("canvas");
 		this.bufCtx = this.buf.getContext("2d");
-		
-		// Fixed Fullscreen Progressive bar bug
-		this.normWidth = this.video.width;
-		this.normHeight = this.video.height;
 
 		var self = this;
 		this.video.addEventListener("play", function() {
-			// Fix INDEX ERR when seeking
-			(self.normWidth == 0) ? self.width = self.video.clientWidth : self.width = self.normWidth ;
-			(self.normHeight == 0) ? self.height = self.video.clientHeight : self.height = self.normHeight ;
+			// Fix INDEX ERR when seeking & Fullscreen Progressive bar bug
+			self.width = (self.video.width == 0) ? self.video.clientWidth : self.video.width ;
+			self.height = (self.video.height == 0) ? self.video.clientHeight : self.video.height ;
+			
+			// TO Fix abitary resolution issues
+			//self.vwidth = (self.video.videoWidth == 0) ? self.video.clientWidth : self.video.videoWidth ;
+			//self.vheight = (self.video.videoHeight == 0) ? self.video.clientHeight : self.video.videoHeight ;
+			self.vwidth = (self.video.videoWidth == 0) ? _videoWidth : self.video.videoWidth ;
+			self.vheight = (self.video.videoHeight == 0) ? _videoHeight : self.video.videoHeight ;
+				
 			// 第一遍载入时没有normWidth和normHeight，我们读clientWidth和clientHeight（屏幕实际显示大小）
 			// 之后过这一块的时候我们永远用normWidth和normHeight，即视频的原始大小。
 			self.prepareSizeLoc();
@@ -82,30 +93,26 @@ var processor = {
 	 */
 	prepareSizeLoc : function() {
 		// for videoJS only
-		//this.video.width = this.width;
-		//this.video.height = this.height;
 		switch (this.srcType) {
 			case "StereoUD":
 			case "StereoDU":
-				this.buf.width = this.width;
-				this.buf.height = this.height * 2;
-				this.imageData = this.ctx.createImageData(this.width, this.height);
+				this.buf.width = this.vwidth;
+				this.buf.height = this.vheight * 2;
+				this.imageData = this.ctx.createImageData(this.vwidth, this.vheight);
 				break;
 			case "StereoLR":
 			case "StereoRL":
-				this.buf.width = this.width * 2;
-				this.buf.height = this.height;
-				this.imageData = this.ctx.createImageData(this.width, this.height);
+				this.buf.width = this.vwidth * 2;
+				this.buf.height = this.vheight;
+				this.imageData = this.ctx.createImageData(this.vwidth, this.vheight);
 				break;
 		}
 		
-		this.cvs.width = this.width;
-		this.cvs.height = this.height;
 		
 		this.cvs.style.position = "relative";
 		// 重叠以便覆盖
 		if (!this.isFullScreen) {
-			this.cvs.style.top = ( 0 - this.height ) + "px";
+			this.enterNormMode();
 		} else {
 			this.enterFullScreen();
 		}
@@ -137,13 +144,13 @@ var processor = {
 		}
 		
 		
-		if(!this.isFullScreen) {
-			this.ctx.putImageData(this.imageData, 0, 0);
-		} else {
+		//if(!this.isFullScreen) {
+		//	this.ctx.putImageData(this.imageData, 0, 0);
+		//} else {
 			this.tmpCvs.getContext("2d").putImageData(this.imageData, 0, 0);
 			
 			this.ctx.drawImage(this.tmpCvs, 0, 0);
-		}
+		//}
 		return;
 	},
 	/*
@@ -154,14 +161,14 @@ var processor = {
 		
 		switch (this.srcType) {
 			case "StereoUD":
-				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);			
-				this.iData1 = this.bufCtx.getImageData(0, 0, this.width, this.height);
-				this.iData2 = this.bufCtx.getImageData(0, this.height, this.width, this.height);
+				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);			
+				this.iData1 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
+				this.iData2 = this.bufCtx.getImageData(0, this.vheight, this.vwidth, this.vheight);
 				break;
 			case "StereoDU":
-				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
-				this.iData2 = this.bufCtx.getImageData(0, 0, this.width, this.height);
-				this.iData1 = this.bufCtx.getImageData(0, this.height, this.width, this.height);
+				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);
+				this.iData2 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
+				this.iData1 = this.bufCtx.getImageData(0, this.vheight, this.vwidth, this.vheight);
 				break;
 			case "StereoLR":
 				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
@@ -169,11 +176,40 @@ var processor = {
 				this.iData2 = this.bufCtx.getImageData(this.width, 0, this.width, this.height);
 				break;
 			case "StereoRL":
-				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
-				this.iData2 = this.bufCtx.getImageData(0, 0, this.width, this.height);
-				this.iData1 = this.bufCtx.getImageData(this.width, 0, this.width, this.height);
+				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);
+				this.iData2 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
+				this.iData1 = this.bufCtx.getImageData(this.vwidth, 0, this.vwidth, this.vheight);
 				break;
 		}
+		return;
+	},
+	
+	enterNormMode : function() {
+		// 存scale前数据
+		this.tmpCvs = document.createElement('canvas');
+		this.tmpCvs.width = this.imageData.width;
+		this.tmpCvs.height = this.imageData.height;
+		
+		this.cvs.width  = this.width;
+		this.cvs.height = this.height;
+		this.cvs.style.top = ( 0 - this.height ) + "px";
+		this.cvs.style.left = 0 + "px";
+		this.cvs.style.zIndex = "1";
+		
+		var hRate = (this.cvs.height + 1) / this.imageData.height;
+		var wRate = (this.cvs.width + 1) / this.imageData.width;
+
+		this.scaleRate = ( hRate < wRate ) ? hRate : wRate;
+
+		// scale 是状态量，scale一次即可。
+		this.ctx.scale(this.scaleRate, this.scaleRate);
+
+		this.ctx.translate(
+			 (this.cvs.width + 1 - this.imageData.width * this.scaleRate) / 2 / this.scaleRate,
+			 (this.cvs.height + 1 - this.imageData.height * this.scaleRate) / 2 / this.scaleRate
+			);
+		this.isFullScreen = false;
+		
 		return;
 	},
 	
@@ -217,12 +253,7 @@ var processor = {
 	},
 	
 	exitFullScreen : function() {
-		this.cvs.width = this.width;
-		this.cvs.height = this.height;
-		this.cvs.style.zIndex = "1";
-		this.cvs.style.top = ( 0 - this.height ) + "px";
-		this.cvs.style.left = 0 + "px";
- 
+		this.enterNormMode();
 		this.isFullScreen = false;
 		return;
 	},

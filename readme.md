@@ -22,7 +22,7 @@ namely
 
 ## Usage
 
-    processor.doLoad(_stereoType, _anaglyphMode);
+    processor.doLoad(_stereoType, _anaglyphMode, _videoWidth, _videoHeight);
 
 #### `imgSrc`: url of source, **NOTICE**, the image must be loaded in the html.
 #### `stereoType`: Stereo type of the source image
@@ -43,11 +43,12 @@ namely
   * `"RedCyan"`
   * `"GreenMagenta"` `TODO`
 
+#### `_videoWidth` `_videoHeight`: width and height of original video.
+
 ## Roadmap
 1. rewrite the code to be javascript style.
 2. add various `anaglyphMode` and `glassType`.
-3. fix bugs that source video is not compressed at one direction.
-4. fix bugs in different video url in HTML and flash.
+3. fix bugs in different video url in HTML and flash.
 
 #### e.g.
 using html5
