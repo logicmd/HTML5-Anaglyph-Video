@@ -17,7 +17,7 @@ The repo consists of three parts.
 namely
 
     :::javascript
-    window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph');
+    window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph','RedCyan',480,360);
 
 
 ## Usage
