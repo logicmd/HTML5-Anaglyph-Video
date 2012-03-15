@@ -65,8 +65,7 @@
 			//self.vheight = (self.video.videoHeight == 0) ? self.video.clientHeight : self.video.videoHeight ;
 			self.vwidth = (self.video.videoWidth == 0) ? _videoWidth : self.video.videoWidth ;
 			self.vheight = (self.video.videoHeight == 0) ? _videoHeight : self.video.videoHeight ;
-			
-			
+				
 			// 第一遍载入时没有normWidth和normHeight，我们读clientWidth和clientHeight（屏幕实际显示大小）
 			// 之后过这一块的时候我们永远用normWidth和normHeight，即视频的原始大小。
 			self.prepareSizeLoc();
