@@ -320,8 +320,8 @@ var processor = {
 		
 		this.cvs.width  = this.width;
 		this.cvs.height = this.height;
-		this.cvs.style.top = ( 0 - this.height ) + "px";
-		this.cvs.style.left = 0 + "px";
+		this.cvs.style.top = ( 0 - this.height - 1 ) + "px";
+		this.cvs.style.left = -1 + "px";
 		this.cvs.style.zIndex = "1";
 		
 		var hRate = (this.cvs.height + 1) / this.imageData.height;
