@@ -299,9 +299,9 @@ var processor = {
 				this.iData1 = this.bufCtx.getImageData(0, this.vheight, this.vwidth, this.vheight);
 				break;
 			case "StereoLR":
-				this.bufCtx.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.buf.width, this.buf.height);
-				this.iData1 = this.bufCtx.getImageData(0, 0, this.width, this.height);
-				this.iData2 = this.bufCtx.getImageData(this.width, 0, this.width, this.height);
+				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);
+				this.iData1 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
+				this.iData2 = this.bufCtx.getImageData(this.vwidth, 0, this.vwidth, this.vheight);
 				break;
 			case "StereoRL":
 				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);
@@ -327,14 +327,14 @@ var processor = {
 		var hRate = (this.cvs.height + 1) / this.imageData.height;
 		var wRate = (this.cvs.width + 1) / this.imageData.width;
 
-		this.scaleRate = ( hRate < wRate ) ? hRate : wRate;
+		var scaleRate = ( hRate < wRate ) ? hRate : wRate;
 
 		// scale 是状态量，scale一次即可。
-		this.ctx.scale(this.scaleRate, this.scaleRate);
+		this.ctx.scale(scaleRate, scaleRate);
 
 		this.ctx.translate(
-			 (this.cvs.width + 1 - this.imageData.width * this.scaleRate) / 2 / this.scaleRate,
-			 (this.cvs.height + 1 - this.imageData.height * this.scaleRate) / 2 / this.scaleRate
+			 (this.cvs.width + 1 - this.imageData.width * scaleRate) / 2 / scaleRate,
+			 (this.cvs.height + 1 - this.imageData.height * scaleRate) / 2 / scaleRate
 			);
 		this.isFullScreen = false;
 		
@@ -365,15 +365,15 @@ var processor = {
 		var hRate = (window.screen.height + 1) / this.imageData.height;
 		var wRate = (this.cvs.width + 1) / this.imageData.width;
 
-		this.scaleRate = ( hRate < wRate ) ? hRate : wRate;
+		var scaleRate = ( hRate < wRate ) ? hRate : wRate;
 
 		// scale 是状态量，scale一次即可。
-		this.ctx.scale(this.scaleRate, this.scaleRate);
+		this.ctx.scale(scaleRate, scaleRate);
 		// translate some pixels to cover original video perfectly.		
 		// Thanks to Chao's help.
 		this.ctx.translate(
-			 (this.cvs.width + 1 - this.imageData.width * this.scaleRate) / 2 / this.scaleRate,
-			 (window.screen.height + 1 - this.imageData.height * this.scaleRate) / 2 / this.scaleRate
+			 (this.cvs.width + 1 - this.imageData.width * scaleRate) / 2 / scaleRate,
+			 (window.screen.height + 1 - this.imageData.height * scaleRate) / 2 / scaleRate
 			);
 		this.isFullScreen = true;
 		
