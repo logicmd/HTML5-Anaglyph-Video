@@ -1,7 +1,7 @@
 ﻿/*
  *  HTML5 Anaglyph Video
  * 
- *  Copyright (C) 2012 Kevin Tong
+ *  Copyright (C) 2012 Kevin Tong (logicmd AT gmail.com)
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -386,10 +386,4 @@ var processor = {
 		return;
 	},
 	
-	// not important.
-	displayFrame : function() {
-		this.imageData = this.iData1;
-		this.ctx.putImageData(this.iData1, 0, 0);
-		
-	},
 };
