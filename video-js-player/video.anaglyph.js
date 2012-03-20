@@ -322,7 +322,7 @@ var processor = {
 		this.cvs.height = this.height;
 		this.cvs.style.top = ( 0 - this.height - 1 ) + "px";
 		this.cvs.style.left = -1 + "px";
-		this.cvs.style.zIndex = "1";
+		this.cvs.style.zIndex = "2";
 		
 		var hRate = (this.cvs.height + 1) / this.imageData.height;
 		var wRate = (this.cvs.width + 1) / this.imageData.width;
