@@ -1,13 +1,11 @@
 #HTML5-Anaglyph-Video
-The repo consists of three parts.
+The repo focus on HTML5 anaglyph video plugin of video-js. 
 
-1. Demo [https://developer.mozilla.org/En/Manipulating_video_using_canvas]
-2. HTML5 anaglyph video implemented by native player
-3. HTML5 anaglyph video plugin of video-js
-
-
-> The Documents is mainly for the third part.
-
+>####NOTICE#####
+>
+>It can only be used in Chrome on Windows and Safari on Mac. 
+>
+>For more info check out Known issues part.
 
 ## Setup
 
@@ -24,7 +22,7 @@ namely
 
     processor.doLoad(_stereoType, _anaglyphMode, _glassType, _videoWidth, _videoHeight);
 
-#### `imgSrc`: url of source, **NOTICE**, the image must be loaded in the html.
+#### `imgSrc`: url of video source.
 #### `stereoType`: Stereo type of the source image
   * `"Flat"`
   * `"Anaglyph"`
@@ -45,10 +43,10 @@ namely
 
 #### `videoWidth` `videoHeight`: width and height of original video.
 
-## Roadmap
-1. rewrite the code to be javascript style.
-2. add various `anaglyphMode` and `glassType`.
-3. fix bugs in different video url in HTML and flash.
+## Known issues
+1. Compatibilty issue in IE/Firefox/iOS Safari
+2. Unexpected displpay issue when Exit full screen on Escape key 
+3. Different video url issue in HTML and flash
 
 #### e.g.
 using html5
@@ -66,3 +64,7 @@ while using flash
     </video>
 
 > This will not happen when js scripts and video files in the same directory.
+
+## Roadmap
+* fix all issues.
+* rewrite the code to be javascript style.
