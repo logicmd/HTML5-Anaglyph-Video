@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video.js | HTML5 Video Player</title>
+
+  <link href="video-js.css" rel="stylesheet" type="text/css">
+
+  <!-- video.js must be in the <head> for older IEs to work. -->
+  <script src="video.patched.min.js"></script>
+  <!-- <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet" type="text/css"><script src="http://vjs.zencdn.net/c/video.js"></script> -->
+	<script src="Stats.js"></script>
+	<script type="text/javascript" src="video.anaglyph.min.js"></script>
+	
+	<style type="text/css">
+		canvas#display {
+			z-index: 2;
+		}
+		
+		video#videoDiv_html5_api {
+			z-index: 1;
+		}
+		
+		div.vjs-controls {
+			z-index: 3;
+		}
+		
+		div#placeholder {
+			height: 300px;
+		}
+		
+	</style>
+
+</head>
+<body>
+
+	<div id="placeholder"></div>
+	<div class="mustBeAssigned" align="center">
+	  <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="500" height="500"
+	      data-setup="{}">
+	    <source src="3DWaltz.mp4" type='video/mp4'> </source> 
+	  </video>
+	  <canvas id="display"></canvas>
+  </div>
+
+<footer>
+	<script type="text/javascript">
+		window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph', 'GreenMagenta', 480, 360);
+		var stats = new Stats();
+
+		// Align top-left
+		stats.getDomElement().style.position = 'absolute';
+		stats.getDomElement().style.left = '0px';
+		stats.getDomElement().style.top = '0px';
+		
+		document.body.appendChild( stats.getDomElement() );
+		
+		setInterval( function () {
+		
+		    stats.update();
+		
+		}, 1000 / 60 );
+	</script>
+</footer>
+</body>
+</html>
