@@ -1,10 +1,9 @@
 ## build video anaglyph js
 import os
 
-source = '../video.anaglyph.js'
-build = '../video.anaglyph.min.js'
-header = '// https://bitbucket.org/logicmd/html5-anaglyph-video\n'
-license = '../LICENSE'
+source = '../src/video.anaglyph.js'
+build = '../build/video.anaglyph.js'
+license = '../src/LICENSE'
 
 os.system( 'java -jar compiler/compiler.jar --language_in=ECMASCRIPT5 --js ' + source + ' --js_output_file ' + build )
 
@@ -17,13 +16,13 @@ license_contents = file.read();
 file.close()
 
 file = open( build, 'w' )
-file.write( license_contents + header + contents )
+file.write( license_contents + contents )
 file.close()
 
 ## build video js
-source = '../video.patched.js'
-build = '../video.patched.min.js'
-license = '../LICENSE-VideoJS'
+source = '../src/video.patched.js'
+build = '../build/video.patched.js'
+license = '../src/LICENSE-VideoJS'
 
 os.system( 'java -jar compiler/compiler.jar --language_in=ECMASCRIPT5 --js ' + source + ' --js_output_file ' + build )
 
