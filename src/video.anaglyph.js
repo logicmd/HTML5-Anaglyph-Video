@@ -86,18 +86,21 @@ var processor = {
 	 */
 	prepareSizeLoc : function() {
 		// for videoJS only
+		var vwidth = this.vwidth;
+		var vheight = this.vheight;
+		 
 		switch (this.srcType) {
 			case "StereoUD":
 			case "StereoDU":
-				this.buf.width = this.vwidth;
-				this.buf.height = this.vheight * 2;
-				this.imageData = this.ctx.createImageData(this.vwidth, this.vheight);
+				this.buf.width = vwidth;
+				this.buf.height = vheight * 2;
+				this.imageData = this.ctx.createImageData(vwidth, vheight);
 				break;
 			case "StereoLR":
 			case "StereoRL":
-				this.buf.width = this.vwidth * 2;
-				this.buf.height = this.vheight;
-				this.imageData = this.ctx.createImageData(this.vwidth, this.vheight);
+				this.buf.width = vwidth * 2;
+				this.buf.height = vheight;
+				this.imageData = this.ctx.createImageData(vwidth, vheight);
 				break;
 		}
 		
@@ -286,27 +289,27 @@ var processor = {
 	 * 注意iData1和iData2没有拉伸。
 	 */
 	splitFrame : function() {
+		var vwidth = this.vwidth;
+		var vheight = this.vheight;
+		
+		this.bufCtx.drawImage(this.video, 0, 0, vwidth, vheight, 0, 0, this.buf.width, this.buf.height);
 		
 		switch (this.srcType) {
 			case "StereoUD":
-				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);			
-				this.iData1 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
-				this.iData2 = this.bufCtx.getImageData(0, this.vheight, this.vwidth, this.vheight);
+				this.iData1 = this.bufCtx.getImageData(0, 0, vwidth, vheight);
+				this.iData2 = this.bufCtx.getImageData(0, vheight, vwidth, vheight);
 				break;
 			case "StereoDU":
-				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);
-				this.iData2 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
-				this.iData1 = this.bufCtx.getImageData(0, this.vheight, this.vwidth, this.vheight);
+				this.iData2 = this.bufCtx.getImageData(0, 0, vwidth, vheight);
+				this.iData1 = this.bufCtx.getImageData(0, vheight, vwidth, vheight);
 				break;
 			case "StereoLR":
-				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);
-				this.iData1 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
-				this.iData2 = this.bufCtx.getImageData(this.vwidth, 0, this.vwidth, this.vheight);
+				this.iData1 = this.bufCtx.getImageData(0, 0, vwidth, vheight);
+				this.iData2 = this.bufCtx.getImageData(vwidth, 0, vwidth, vheight);
 				break;
 			case "StereoRL":
-				this.bufCtx.drawImage(this.video, 0, 0, this.vwidth, this.vheight, 0, 0, this.buf.width, this.buf.height);
-				this.iData2 = this.bufCtx.getImageData(0, 0, this.vwidth, this.vheight);
-				this.iData1 = this.bufCtx.getImageData(this.vwidth, 0, this.vwidth, this.vheight);
+				this.iData2 = this.bufCtx.getImageData(0, 0, vwidth, vheight);
+				this.iData1 = this.bufCtx.getImageData(vwidth, 0, vwidth, vheight);
 				break;
 		}
 		return;
