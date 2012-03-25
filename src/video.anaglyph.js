@@ -384,6 +384,6 @@ var processor = {
 		this.enterNormMode();
 		this.isFullScreen = false;
 		return;
-	},
+	}
 	
 };
