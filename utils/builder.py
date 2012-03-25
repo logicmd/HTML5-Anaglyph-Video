@@ -7,17 +7,17 @@ license = '../src/LICENSE'
 
 os.system( 'java -jar compiler/compiler.jar --language_in=ECMASCRIPT5 --js ' + source + ' --js_output_file ' + build )
 
-file = open( build, 'r' )
-contents = file.read();
-file.close()
+buildFile = open( build, 'r' )
+contents = buildFile.read();
+buildFile.close()
 
-file = open( license, 'r' )
-license_contents = file.read();
-file.close()
+licenseFile = open( license, 'r' )
+license_contents = licenseFile.read();
+licenseFile.close()
 
-file = open( build, 'w' )
-file.write( license_contents + contents )
-file.close()
+buildFile = open( build, 'w' )
+buildFile.write( license_contents + contents )
+buildFile.close()
 
 ## build video js
 source = '../src/video.patched.js'
@@ -26,14 +26,20 @@ license = '../src/LICENSE-VideoJS'
 
 os.system( 'java -jar compiler/compiler.jar --language_in=ECMASCRIPT5 --js ' + source + ' --js_output_file ' + build )
 
-file = open( build, 'r' )
-contents = file.read();
-file.close()
+buildFile = open( build, 'r' )
+contents = buildFile.read();
+buildFile.close()
 
-file = open( license, 'r' )
-license_contents = file.read();
-file.close()
+licenseFile = open( license, 'r' )
+license_contents = licenseFile.read();
+licenseFile.close()
 
-file = open( build, 'w' )
-file.write( license_contents + contents )
-file.close()
+buildFile = open( build, 'w' )
+buildFile.write( license_contents + contents )
+buildFile.close()
+
+## more obfuscate
+buildFile = open( build, 'r' )
+contents = buildFile.read();
+buildFile.close()
+

@@ -1,0 +1,7 @@
+this.srcType
+this.stereoMode
+this.glassType
+this.video
+this.cvs
+this.ctx
+this.buf

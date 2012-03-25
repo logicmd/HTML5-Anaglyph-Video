@@ -1,0 +1,23 @@
+#this expression
+this.video
+this.splitFrame
+this.computeFrame
+this.srcType
+this.stereoMode
+this.glassType
+this.isFullScreen
+this.cvs
+this.ctx
+this.buf
+this.bufCtx
+this.vwidth
+this.vheight
+this.imageData
+this.enterNormMode
+this.enterFullScreen
+this.iData
+this.tmpCvs
+this.width
+this.height
+this.offsetX
+this.offsetY
