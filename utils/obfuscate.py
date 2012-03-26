@@ -3,31 +3,21 @@ import re
 build = '../build/video.anaglyph.js'
 vars = 'obfuscate/variable.txt'
 out = 'out.js'
-
-file = open( build, 'r' )
-varf = open( vars, 'r')
-
-content = file.read();
-
 counter = 0;
 
-for line in varf.readlines():
-    
-    thisPattern = re.compile(line)
-    obsfucated = "this.obs" + str(++counter) ;
-    info = []
-    
-    for i in content:
-        c = re.sub(thisPattern, obsfucated, i)
-        info.append(c)
+file = open( build, 'r' );
+varF = open( vars, 'r');
+content = file.read();
+file.close();
 
-    content = ''.join(info)
-    
-    
-file.close()
-varf.close()
+for variable_orginal in varF.readlines():
+   variable_obsfucated = "this.ob" + str(counter);
+   content = content.replace(variable_orginal, variable_obsfucated);
+   pos = content.find(variable_obsfucated)
+   counter+=1;
+ 
+varF.close()
 
-
-file = open( out, 'w' )
-content = file.write(c);
-file.close()
+outF = open( out, 'w' )
+outF.write(content)
+outF.close()

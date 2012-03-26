@@ -1,7 +1,6 @@
 import re
 
-source = '../src/video.anaglyph.js'
-build = '../build/video.anaglyph.js'
+source = '../../src/video.anaglyph.js'
 
 srcFile = open( source, 'r' )
 src = srcFile.read();
@@ -10,11 +9,11 @@ srcFile.close()
 thisPattern = re.compile("this\.[A-Za-z]+")
 thisArray = thisPattern.findall(src)
 
-m = ["#this expression"]
+thisDict = ["#this expression"]
 for i in thisArray:
-    if i not in m:
-        m.append(i)
+    if i not in thisDict:
+        thisDict.append(i)
 
-wordList=open('exp.txt',"w")
-wordList.write("\n".join(m))
+wordList=open('thisExp.txt',"w")
+wordList.write("\n".join(thisDict))
 wordList.close()
