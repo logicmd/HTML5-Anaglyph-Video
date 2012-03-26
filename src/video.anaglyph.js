@@ -365,8 +365,8 @@ var processor = {
 		// Due to the bug of video-js issue #153
 		// https://github.com/zencoder/video-js/issues/153
 		//var hRate = this.cvs.height / this.imageData.height;
-		var hRate = (window.screen.height + 1) / this.imageData.height;
-		var wRate = (this.cvs.width + 1) / this.imageData.width;
+		var hRate = window.screen.height / this.imageData.height;
+		var wRate = this.cvs.width / this.imageData.width;
 
 		var scaleRate = ( hRate < wRate ) ? hRate : wRate;
 
@@ -375,8 +375,8 @@ var processor = {
 		// translate some pixels to cover original video perfectly.		
 		// Thanks to Chao's help.
 		this.ctx.translate(
-			 (this.cvs.width + 1 - this.imageData.width * scaleRate) / 2 / scaleRate,
-			 (window.screen.height + 1 - this.imageData.height * scaleRate) / 2 / scaleRate
+			 (this.cvs.width - this.imageData.width * scaleRate) / 2 / scaleRate,
+			 (window.screen.height - this.imageData.height * scaleRate) / 2 / scaleRate
 			);
 		this.isFullScreen = true;
 		
