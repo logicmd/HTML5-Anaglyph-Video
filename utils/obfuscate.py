@@ -14,17 +14,18 @@ counter = 0;
 for line in varf.readlines():
     
     thisPattern = re.compile(line)
-    
     obsfucated = "this.obs" + str(++counter) ;
-    
     info = []
+    
     for i in content:
-        c = re.sub(thisPattern,obsfucated,i)
+        c = re.sub(thisPattern, obsfucated, i)
         info.append(c)
 
-c = ''.join(info)
+    content = ''.join(info)
+    
+    
 file.close()
-
+varf.close()
 
 
 file = open( out, 'w' )
