@@ -1,3 +1,5 @@
 *.ogv
 *.mp4
 *.bak
+utils/out.js
+.settings

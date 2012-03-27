@@ -24,11 +24,11 @@ var processor = {
 		}
 		this.splitFrame();
 		this.computeFrame();
-		var self = this;
+		//var self = this;
 		// 每次算完一帧以后，等待0ms
 		// 完成了timerCallback的死循环。
 		setTimeout(function() {
-			self.timerCallback();
+			this.timerCallback();
 		}, 0);
 	},
 	/*
@@ -61,21 +61,21 @@ var processor = {
 		this.buf = document.createElement("canvas");
 		this.bufCtx = this.buf.getContext("2d");
 
-		var self = this;
+		//var self = this;
 		this.video.addEventListener("play", function() {
 			// Fix INDEX ERR when seeking & Fullscreen Progressive bar bug
-			self.width = (self.video.width == 0) ? self.video.clientWidth : self.video.width ;
-			self.height = (self.video.height == 0) ? self.video.clientHeight : self.video.height ;
+			this.width = (this.video.width == 0) ? this.video.clientWidth : this.video.width ;
+			this.height = (this.video.height == 0) ? this.video.clientHeight : this.video.height ;
 			
 			// TO Fix abitary resolution issues
 
-			self.vwidth = (self.video.videoWidth == 0) ? _videoWidth : self.video.videoWidth ;
-			self.vheight = (self.video.videoHeight == 0) ? _videoHeight : self.video.videoHeight ;
+			this.vwidth = (this.video.videoWidth == 0) ? _videoWidth : this.video.videoWidth ;
+			this.vheight = (this.video.videoHeight == 0) ? _videoHeight : this.video.videoHeight ;
 				
 			// 第一遍载入时没有normWidth和normHeight，我们读clientWidth和clientHeight（屏幕实际显示大小）
 			// 之后过这一块的时候我们永远用normWidth和normHeight，即视频的原始大小。
-			self.prepareSizeLoc();
-			self.timerCallback();
+			this.prepareSizeLoc();
+			this.timerCallback();
 		}, false);
 		
 	},
