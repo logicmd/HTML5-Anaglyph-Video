@@ -40,21 +40,23 @@ function ResolutionSwitchWriter(){
 	var urlLen = url.length;
 	var resSwitcher = document.getElementById("ResolutionSwitcher");
 	if (url.search("240p|480p|720p") == -1){
+		//var resEntry = document.getElementById("ResolutionEntry");
+		//resEntry.innerHTML = "";
 		resSwitcher.innerHTML = "";
-	} else if (url.search("240p") != -1) {
+	} else {
 		var kids = resSwitcher.childNodes;
-		kids[1].href = url.replace("240p", "480p");
-		kids[2].href = url.replace("240p", "720p");
-		kids[0].innerHTML = "";
-	} else if (url.search("480p") != -1) {
-		var kids = resSwitcher.childNodes;
-		kids[0].href = url.replace("480p", "240p");
-		kids[2].href = url.replace("480p", "720p");
-		kids[1].innerHTML = "";
-	} else if (url.search("720p") != -1) {
-		var kids = resSwitcher.childNodes;
-		kids[0].href = url.replace("720p", "240p");
-		kids[1].href = url.replace("720p", "480p");
-		kids[2].innerHTML = "";
+		if (url.search("240p") != -1) {
+			kids[3].childNodes[0].href = url.replace("240p", "480p");
+			kids[5].childNodes[0].href = url.replace("240p", "720p");
+			kids[1].childNodes[0].removeAttribute("href");
+		} else if (url.search("480p") != -1) {
+			kids[1].childNodes[0].href = url.replace("480p", "240p");
+			kids[5].childNodes[0].href = url.replace("480p", "720p");
+			kids[3].childNodes[0].removeAttribute("href");
+		} else if (url.search("720p") != -1) {
+			kids[1].childNodes[0].href = url.replace("720p", "240p");
+			kids[3].childNodes[0].href = url.replace("720p", "480p");
+			kids[5].childNodes[0].removeAttribute("href");
+		}
 	}
 }
