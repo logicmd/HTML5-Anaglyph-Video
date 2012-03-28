@@ -2649,8 +2649,7 @@ _V_.Player = _V_.Component.extend({
      // @initialY 最初<video>放在html的位置Y
      var vdiv = document.getElementById("videoDiv");
      //const shouldX = vdiv.offsetLeft - document.body.scrollLeft;
-     var initialX = 758; // 8 | 758
-     var initialX = shouldX;
+     var initialX = 8; // 8 | 758
      // we cannot assign document.getElementById("videoDiv").offsetLeft to a immutable variables...
      // even we got an const, we cannot exit fullscreen properly. 
      // I don't want to debug more, 没有绩效，你懂得... 
