@@ -53,6 +53,10 @@ var processor = {
 		// 即使这个video tag之后要被rename ID，但是在浏览器看了它还是有同一个唯一的ID
 		// 这个ID不会改变，所以，我们就拿之前的ID就O了
 		
+		// SB要来了！
+		//this.offsetX = this.video.offsetLeft;
+		//
+		
 		this.isFullScreen = false;
 		
 		this.cvs = document.getElementById("display");
@@ -356,8 +360,27 @@ var processor = {
 		this.cvs.style.zIndex = "2147483647";
 		
 		// 只有第一次call的时候才能拿到正确的offset，之后再seek的时候拿不到，因此我们需要保存这个值
+		// if (_offsetX > 0) {
+			// if (_offsetX == 700) {
+				// this.offsetX = _offsetX = document.getElementById("videoDiv").offsetLeft;
+			// }
+			// this.offsetX = _offsetX; // save _offsetX cause it is right
+		// } else {
+			// if (this.offsetX == 700) { // something is wrong, I don't know where
+				// _offsetX = this.offsetX = document.getElementById("videoDiv").offsetLeft;
+			// } else {
+				// _offsetX = this.offsetX;
+			// }
+		// }
+		// // if(this.offsetX == 700 || _offsetX == 700) {
+			// // _offsetX = this.offsetX = document.getElementById("videoDiv").offsetLeft;
+		// // }
+		//const shouldX = document.getElementById("videoDiv").offsetLeft - document.body.scrollLeft;
+		//_offsetX = shouldX;
 		(_offsetX != 0) ? ( this.offsetX = _offsetX ) : ( _offsetX = this.offsetX );
-		(_offsetY != 0) ? ( this.offsetY = _offsetY ) : ( _offsetX = this.offsetY );
+		// coincidence...
+		// this is time when _offsetY and _offsetX become undefined, but it works, fuck!
+		(_offsetY != 0) ? ( this.offsetY = _offsetY ) : ( _offsetY = this.offsetY );
 		
 		this.cvs.style.top = ( 0 - this.height - _offsetY ) + "px";
 		this.cvs.style.left = ( 0 - _offsetX ) + "px";
