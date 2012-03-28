@@ -1,5 +1,5 @@
 /*
- *  HTML5 Anaglyph Video
+ *  Switch Writer
  * 
  *  Copyright (C) 2012 Kevin Tong (logicmd AT gmail.com)
  *
@@ -16,10 +16,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+function SwitchWriter(){
+	VersionSwitchWriter();
+	ResolutionSwitchWriter();
+}
 function VersionSwitchWriter(){
 	var url = location.href;
 	var urlLen = url.length;
-	var verSwitcher = document.getElementById("switcher");
+	var verSwitcher = document.getElementById("VersionSwitcher");
 	if (url.charAt(urlLen - 6)=='H') {
 		verSwitcher.innerHTML = "Switch to Flash";
 		verSwitcher.href = url.replace("H.html", "F.html");
@@ -29,5 +33,25 @@ function VersionSwitchWriter(){
 	} else {
 		verSwitcher.innerHTML = "Switch";
 		verSwitcher.href = "#";	
+	}
+}
+function ResolutionSwitchWriter(){
+	var url = location.href;
+	var urlLen = url.length;
+	var resSwitcher = document.getElementById("ResolutionSwitcher");
+	if (url.search("240p|480p|720p") == -1){
+		resSwitcher.innerHTML = "";
+	} else if (url.search("240p") != -1) {
+		var kids = resSwitcher.childNodes;
+		kids[1].href = url.replace("240p", "480p");
+		kids[2].href = url.replace("240p", "720p");
+	} else if (url.search("480p") != -1) {
+		var kids = resSwitcher.childNodes;
+		kids[0].href = url.replace("480p", "240p");
+		kids[2].href = url.replace("480p", "720p");
+	} else if (url.search("720p") != -1) {
+		var kids = resSwitcher.childNodes;
+		kids[0].href = url.replace("720p", "240p");
+		kids[1].href = url.replace("720p", "480p");
 	}
 }
