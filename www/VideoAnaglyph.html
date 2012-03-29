@@ -24,6 +24,12 @@
 			z-index: 3;
 		}
 		
+		div#toFixOffsetLeftBugs {
+			width: 500px;
+			height: 500px;
+			margin:0 auto;
+		}
+		
 		div#placeholder {
 			height: 300px;
 		}
@@ -34,17 +40,21 @@
 <body>
 
 	<div id="placeholder"></div>
-	<div class="mustBeAssigned" align="center">
-	  <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="500" height="500"
-	      data-setup="{}">
-	    <source src="3DWaltz.mp4" type='video/mp4'> </source> 
-	  </video>
-	  <canvas id="display"></canvas>
+	<div class="mustBeAssigned">
+		<div id="toFixOffsetLeftBugs">
+		  <video id="videoDiv" class="video-js vjs-default-skin" controls preload="none" width="500" height="500"
+		      data-setup="{}">
+		    <source src="3DWaltz.mp4" type='video/mp4'> </source> 
+		  </video>
+	  	<canvas id="display"></canvas>
+	  </div>
   </div>
 
 <footer>
 	<script type="text/javascript">
 		var videoDivVar = document.getElementById("videoDiv");
+		//var paddingLeft = document.body.clientWidth - videoDivVar.width;
+		//document.getElementById("toFixOffsetLeftBugs").style.paddingLeft = paddingLeft / 2;
 		window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph', 'GreenMagenta', 480, 360, videoDivVar.width, videoDivVar.height);
 	</script>
 </footer>

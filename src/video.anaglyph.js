@@ -52,6 +52,7 @@ var processor = {
 		this.width = _displayWidth;
 		this.height = _displayHeight;
 		this.video = document.getElementById("videoDiv");
+		
 		// 即使这个video tag之后要被rename ID，但是在浏览器看了它还是有同一个唯一的ID
 		// 这个ID不会改变，所以，我们就拿之前的ID就O了
 		
@@ -83,9 +84,9 @@ var processor = {
 
 			//self.vwidth = (self.video.videoWidth == 0) ? _videoWidth : self.video.videoWidth ;
 			//self.vheight = (self.video.videoHeight == 0) ? _videoHeight : self.video.videoHeight ;
-				
 			// 第一遍载入时没有normWidth和normHeight，我们读clientWidth和clientHeight（屏幕实际显示大小）
 			// 之后过这一块的时候我们永远用normWidth和normHeight，即视频的原始大小。
+						
 			self.prepareSizeLoc();
 			self.timerCallback();
 		}, false);
@@ -336,11 +337,11 @@ var processor = {
 		this.cvs.width  = this.width;
 		this.cvs.height = this.height;
 		this.cvs.style.top = ( 0 - this.height - 1 ) + "px";
-		this.cvs.style.left = -1 + "px";
+		this.cvs.style.left = -0.5 + "px"; // perfect param, works in all situation
 		this.cvs.style.zIndex = "2";
 		
-		var hRate = (this.cvs.height + 1) / this.imageData.height;
-		var wRate = (this.cvs.width + 1) / this.imageData.width;
+		var hRate = (this.cvs.height) / this.imageData.height; // perfect param
+		var wRate = (this.cvs.width) / this.imageData.width; // perfect param
 
 		var scaleRate = ( hRate < wRate ) ? hRate : wRate;
 
@@ -348,8 +349,8 @@ var processor = {
 		this.ctx.scale(scaleRate, scaleRate);
 
 		this.ctx.translate(
-			 (this.cvs.width + 1 - this.imageData.width * scaleRate) / 2 / scaleRate,
-			 (this.cvs.height + 1 - this.imageData.height * scaleRate) / 2 / scaleRate
+			 (this.cvs.width - this.imageData.width * scaleRate) / 2 / scaleRate, // perfect param
+			 (this.cvs.height - this.imageData.height * scaleRate) / 2 / scaleRate // perfect param
 			);
 		this.isFullScreen = false;
 		
@@ -385,19 +386,19 @@ var processor = {
 		// // }
 		//const shouldX = document.getElementById("videoDiv").offsetLeft - document.body.scrollLeft;
 		//_offsetX = shouldX;
-		(_offsetX != 0) ? ( this.offsetX = _offsetX ) : ( _offsetX = this.offsetX );
+		(_offsetX > 0) ? ( this.offsetX = _offsetX ) : ( _offsetX = this.offsetX );
 		// coincidence...
 		// this is time when _offsetY and _offsetX become undefined, but it works, fuck!
 		(_offsetY != 0) ? ( this.offsetY = _offsetY ) : ( _offsetY = this.offsetY );
 		
 		this.cvs.style.top = ( 0 - this.height - _offsetY ) + "px";
-		this.cvs.style.left = ( 0 - _offsetX ) + "px";
+		this.cvs.style.left = ( 0 - _offsetX - 8 ) + "px";
 		
 		// Due to the bug of video-js issue #153
 		// https://github.com/zencoder/video-js/issues/153
 		//var hRate = this.cvs.height / this.imageData.height;
-		var hRate = window.screen.height / this.imageData.height;
-		var wRate = this.cvs.width / this.imageData.width;
+		var hRate = (window.screen.height + 1) / this.imageData.height;
+		var wRate = (this.cvs.width + 1) / this.imageData.width;
 
 		var scaleRate = ( hRate < wRate ) ? hRate : wRate;
 
@@ -406,8 +407,8 @@ var processor = {
 		// translate some pixels to cover original video perfectly.		
 		// Thanks to Chao's help.
 		this.ctx.translate(
-			 (this.cvs.width - this.imageData.width * scaleRate) / 2 / scaleRate,
-			 (window.screen.height - this.imageData.height * scaleRate) / 2 / scaleRate
+			 (this.cvs.width + 1 - this.imageData.width * scaleRate ) / 2 / scaleRate,
+			 (window.screen.height + 1 - this.imageData.height * scaleRate) / 2 / scaleRate
 			);
 		this.isFullScreen = true;
 		
