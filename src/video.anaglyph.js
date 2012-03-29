@@ -44,11 +44,13 @@ var processor = {
 	 * 
 	 * 拿到两个canvas的的context，ctx1和ctx2
 	 */
-	doLoad : function(_srcType, _stereoMode, _glassType, _videoWidth, _videoHeight) {
+	doLoad : function(_srcType, _stereoMode, _glassType, _videoWidth, _videoHeight, _displayWidth, _displayHeight) {
 		
 		this.srcType = _srcType;
 		this.stereoMode = _stereoMode;
 		this.glassType = _glassType;
+		this.width = _displayWidth;
+		this.height = _displayHeight;
 		this.video = document.getElementById("videoDiv");
 		// 即使这个video tag之后要被rename ID，但是在浏览器看了它还是有同一个唯一的ID
 		// 这个ID不会改变，所以，我们就拿之前的ID就O了
@@ -65,16 +67,22 @@ var processor = {
 		this.buf = document.createElement("canvas");
 		this.bufCtx = this.buf.getContext("2d");
 
+		this.width = _displayWidth;
+		this.height = _displayHeight;
+		
+		this.vwidth = _videoWidth;
+		this.vheight = _videoHeight;
+		
 		var self = this;
 		this.video.addEventListener("play", function() {
 			// Fix INDEX ERR when seeking & Fullscreen Progressive bar bug
-			self.width = (self.video.width == 0) ? self.video.clientWidth : self.video.width ;
-			self.height = (self.video.height == 0) ? self.video.clientHeight : self.video.height ;
+			//self.width = (self.video.width == 0) ? self.video.clientWidth : self.video.width ;
+			//self.height = (self.video.height == 0) ? self.video.clientHeight : self.video.height ;
 			
 			// TO Fix abitary resolution issues
 
-			self.vwidth = (self.video.videoWidth == 0) ? _videoWidth : self.video.videoWidth ;
-			self.vheight = (self.video.videoHeight == 0) ? _videoHeight : self.video.videoHeight ;
+			//self.vwidth = (self.video.videoWidth == 0) ? _videoWidth : self.video.videoWidth ;
+			//self.vheight = (self.video.videoHeight == 0) ? _videoHeight : self.video.videoHeight ;
 				
 			// 第一遍载入时没有normWidth和normHeight，我们读clientWidth和clientHeight（屏幕实际显示大小）
 			// 之后过这一块的时候我们永远用normWidth和normHeight，即视频的原始大小。

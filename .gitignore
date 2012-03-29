@@ -1,4 +1,4 @@
 *.ogv
 *.mp4
 *.bak
-/build/
+build/*.js

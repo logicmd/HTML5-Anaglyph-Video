@@ -44,7 +44,8 @@
 
 <footer>
 	<script type="text/javascript">
-		window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph', 'GreenMagenta', 480, 360);
+		var videoDivVar = document.getElementById("videoDiv");
+		window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph', 'GreenMagenta', 480, 360, videoDivVar.width, videoDivVar.height);
 	</script>
 </footer>
 </body>
