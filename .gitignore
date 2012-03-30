@@ -2,3 +2,4 @@
 *.mp4
 *.bak
 build/*.js
+.settings/
