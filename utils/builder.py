@@ -1,7 +1,7 @@
 ## build video anaglyph js
 import os
 
-source = '../src/video.anaglyph.js'
+source = 'middle.js'
 build = '../build/video.anaglyph.js'
 license = '../src/LICENSE'
 
@@ -20,7 +20,7 @@ buildFile.write( license_contents + contents )
 buildFile.close()
 
 ## build video js
-source = '../src/video.patched.js'
+source = 'middle2.js'
 build = '../build/video.patched.js'
 license = '../src/LICENSE-VideoJS'
 
@@ -42,4 +42,6 @@ buildFile.close()
 buildFile = open( build, 'r' )
 contents = buildFile.read();
 buildFile.close()
+
+
 
