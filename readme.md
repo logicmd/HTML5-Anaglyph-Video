@@ -15,12 +15,12 @@ The repo focus on HTML5 anaglyph video plugin of video-js.
 namely
 
     :::javascript
-    window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph','RedCyan',480,360);
+    window.onload = processor.doLoad('StereoDU','OptimizedAnaglyph','RedCyan',480, 360, videoDivVar.width, videoDivVar.height);
 
 
 ## Usage
 
-    processor.doLoad(_stereoType, _anaglyphMode, _glassType, _videoWidth, _videoHeight);
+    processor.doLoad(_srcType, _stereoMode, _glassType, _videoWidth, _videoHeight, _displayWidth, _displayHeight);
 
 #### `imgSrc`: url of video source.
 #### `stereoType`: Stereo type of the source image
@@ -42,6 +42,8 @@ namely
   * `"GreenMagenta"` 
 
 #### `videoWidth` `videoHeight`: width and height of original video.
+
+#### `displayWidth` `displayHeight`: width and height of display canvas.
 
 ## Known issues
 1. Compatibilty issue in IE/Firefox/iOS Safari

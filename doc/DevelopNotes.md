@@ -18,3 +18,7 @@
 7. 全屏的seek问题。本质上就是seek问题，每次seek其实都触发了play事件，全屏seek时候会调用`prepareSizeLoc()`，改函数没有考虑全屏的样式。`this.width`和`this.height`不再是clientWidth和clientHeight，这个是视频显示大小，我们对`this.width`和`this.height`进行了封装在保证onLoad的时候不为空同时，在正常的时候对于视频实际大小。
 8. 修复视频外框不能任意大小的时候，沿用了全屏时候的操作，继续scale。
 9. 修复`<video>`放在不同位置的全屏会错位的bug时，考虑了`<video>`初始的位置和滚动条的位置。
+10. 对于网站中flash总是置顶的情况，我们加入参数wmode="opaque"即可。reference: ```wmode="transparent|opaque|windows"``` [http://www.xunyangweb.com/a1/css3_html5/css3_html5104.html]
+11. 再也不用中间变量，直接getElementById，之前诡异是由于debug和不debug时序不一致，所以调不出来。另一个问题在于之前网页实际div没有控制好宽度，直接定格的，所以offsetX设定的常数8，现在好了，恩恩
+<strike>offsetX和offsetY实在是太诡异。我们需要吧videoDiv的offsetX赋值给一个immutable variable,但是javascript const好像不太好使。</strike>
+12. normMode不为了覆盖而增加width和height，style.left = - 0.5px 太美妙了
