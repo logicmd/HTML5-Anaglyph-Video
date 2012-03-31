@@ -1,5 +1,7 @@
 *.ogv
 *.mp4
 *.bak
-.settings/
 build/
+utils/*.js
+.settings
+*.pyc
