@@ -3,3 +3,4 @@
 *.bak
 utils/*.js
 .settings
+*.pyc
