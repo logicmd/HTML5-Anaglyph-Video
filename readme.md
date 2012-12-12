@@ -36,9 +36,9 @@ __NOTICE: It can only be used in Chrome on Windows and Safari on Mac. For more i
   * "RedCyan"
   * "GreenMagenta"
 
--  __videoWidth__/__videoHeight__: width and height of original video.
+-  __videoWidth__ / __videoHeight__: width and height of original video.
 
-- __displayWidth__/__displayHeight__: width and height of display canvas.
+- __displayWidth__ / __displayHeight__: width and height of display canvas.
 
 ## Known issues
 1. Compatibilty issue in IE/Firefox/iOS Safari
