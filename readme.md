@@ -4,9 +4,13 @@ The repo focus on HTML5 anaglyph video plugin of video-js.
 
 __NOTICE: It can only be used in Chrome on Windows and Safari on Mac. For more info check out Known issues part.__
 
+## Demo
+
+http://server.logicmd.net/
+
 ## Setup
 
-- add the following in `<footer>` of your html.
+add the following in `<footer>` of your html.
 
     <script src="video.patched.js"></script>
     <script src="video.anaglyph.js"></script>
